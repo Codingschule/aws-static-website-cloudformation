@@ -40,8 +40,11 @@ Resources:
 
 Outputs:
   SiteURL:
-#    Value: !Sub "http://${WebsiteBucket}"
     Value: !Sub "http://${WebsiteBucket}.s3-website-${AWS::Region}.amazonaws.com" 
+  BucketNameWebsitePublic:
+    Value: !Sub "${WebsiteBucket}" 
+  DebugSyncCommand:
+    Value: !Sub "aws s3 sync ../website s3://${WebsiteBucket} --profile=kodekloud" 
     # http://cs-itpro-s3web-us-east-1-992382582998 .s3-website-us-east-1.amazonaws.com/
 #   Distribution:
 #     Type: AWS::CloudFront::Distribution
