@@ -1,11 +1,13 @@
 Parameters:
-  AppName: "cs_itpro_s3website001"
+  AppName: 
+    Type: String
+    Default: "cs-itpro-s3web"
 
 Resources:
   WebsiteBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: !Sub ${AppName}-${AWS::Region}-${AWS::AccountId}
+      BucketName: !Sub "${AppName}-${AWS::Region}-${AWS::AccountId}"
       PublicAccessBlockConfiguration:
         BlockPublicAcls: true
         BlockPublicPolicy: true
