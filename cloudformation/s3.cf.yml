@@ -45,21 +45,3 @@ Outputs:
     Value: !Sub "${WebsiteBucket}" 
   DebugSyncCommand:
     Value: !Sub "aws s3 sync ../website s3://${WebsiteBucket} --profile=kodekloud" 
-    # http://cs-itpro-s3web-us-east-1-992382582998 .s3-website-us-east-1.amazonaws.com/
-#   Distribution:
-#     Type: AWS::CloudFront::Distribution
-#     Properties:
-#       DistributionConfig:
-#         Origins:
-#           - DomainName: !GetAtt WebsiteBucket.RegionalDomainName
-#             Id: Origin1
-#             S3OriginConfig:
-#               OriginAccessIdentity: ""
-#         DefaultCacheBehavior:
-#           TargetOriginId: Origin1
-#           ViewerProtocolPolicy: redirect-to-https
-#         Enabled: true
-
-# Outputs:
-#   SiteURL:
-#     Value: !Sub https://${Distribution.DomainName}
