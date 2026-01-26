@@ -36,11 +36,13 @@ Resources:
             Effect: Allow
             Principal: "*"
             Action: s3:GetObject
-            Resource: !Sub "${WebsiteBucket}/*"
+            Resource: !Sub "arn:aws:s3:::${WebsiteBucket}/*"
 
 Outputs:
   SiteURL:
-    Value: !Sub "http://${WebsiteBucket}"
+#    Value: !Sub "http://${WebsiteBucket}"
+    Value: !Sub "http://${WebsiteBucket}.s3-website-${AWS::Region}.amazonaws.com" 
+    # http://cs-itpro-s3web-us-east-1-992382582998 .s3-website-us-east-1.amazonaws.com/
 #   Distribution:
 #     Type: AWS::CloudFront::Distribution
 #     Properties:
