@@ -79,17 +79,92 @@ instead **deploy** you can use **create-stack** or **update-stack** to be more s
 
 ---
 
-## cost calculation example
+## cost calculation examples
 
-Since inbound traffic is usually free and you only use an S3 bucket (default tarrif)
+Since inbound traffic is usually free and you only use an S3 bucket (default tarrif), the estimated costs depend on the size and frequency of the website.
+
+- uploading / updating the website: usually low cost compared to outbound
+- storage: storage actually used
+- outbound traffic:
+    - number of requests
+    - data transfered out
+
+The following examples were calculated for us-east-1 on Jan 27th 2026 and are mere examples.
+They give you an idea how cost changes with file size but also number of files.
+
 
 ---
 
-## limitations
+### Cost for 1kB Website (1 file), called 1mio times, updated daily
 
-- no https transport encryption without CloudFront
+| Category                           | Description                   | Calculation                | Cost (USD) |
+| ----------------------------------- | ------------------------------ | ------------------------- | ------------ |
+| **S3 Std – storage**          | Tiered price                   | 0,000001 GB × 0,023 USD   | 0,00         |
+| **S3 Std – PUT**      | 30 PUT Requests                | 30 × 0,000005 USD         | 0,0001       |
+| **S3 Std – GET**      | 1.000.000 GET Requests         | 1.000.000 × 0,0000004 USD | 0,40         |
+| **S3 Select – transfer**         | Datenrücksendung               | 1 GB × 0,0007 USD         | 0,0007       |
+| **monthly cost**                   | Storage + Requests + S3 Select | 0,40 + 0,0001 + 0,0007    | **0,40**     |
+
+
+---
+
+### Cost for 10 MB Website (1 file), completely called 1mio times, updated daily
+
+| Category                                   | Description                      | Calculation                    | Cost (USD) |
+| ------------------------------------------ | -------------------------------- | ------------------------------ | ---------- |
+| **S3 Std – Storage**                  | Tiered price                     | 0.01 GB × 0.023 USD            | 0.00       |
+| **S3 Std – Storage (tier)**     | Total tier cost                  | –                              | 0.0002     |
+| **S3 Std – PUT**             | 30 PUT requests                  | 30 × 0.000005 USD              | 0.0001     |
+| **S3 Std – GET**             | 1,000,000 GET | 1,000,000 × 0.0000004 USD      | 0.40       |
+| **S3 Select – Data Returned**              | Data return                      | **10,240 GB × 0.0007** USD         | 7.168      |
+| **Total (Storage + Requests + S3 Select)** | Combined monthly cost            | 0.0002 + 0.40 + 0.0001 + 7.168 | **7.57**   |
+| **Monthly Cost (S3 Std)**             | Total monthly cost               | –                              | **7.57**   |
+
+
+---
+
+### Cost 10 MB Site, but 100 files, completely called 1mio times
+
+| Category                                   | Description                        | Calculation                    | Cost (USD) |
+| ------------------------------------------ | ---------------------------------- | ------------------------------ | ---------- |
+| **S3 Std – Storage**                  | Tiered price                       | 0.01 GB × 0.023 USD            | 0.00       |
+| **S3 Std – Storage**     | Total tier cost                    | –                              | 0.0002     |
+| **S3 Std – PUT**             | 3,000 PUT requests                 | 3,000 × 0.000005 USD           | 0.015      |
+| **S3 Std – GET**             | 100 Mio GET  | **100 mio × 0.0000004** USD    | **40.00**      |
+| **S3 Select – Data**              | Data return                        | 10,240 GB × 0.0007 USD         | 7.168      |
+| **Total** | Combined              | 0.0002 + 40.00 + 0.015 + 7.168 | **47.18**  |
+
+
+See [calculate.aws][calc] for detailed calculations
+
+---
+
+## chances and risks of using AWS for website hosting
+
+```mermaid
+quadrantChart
+    title Opportunities vs Risks
+    x-axis Low Impact --> High Impact
+    y-axis Low Probability --> High Probability
+
+    quadrant-1 High Chance / High Risk
+    quadrant-2 High Chance / Low Risk
+    quadrant-3 Low Chance / Low Risk
+    quadrant-4 Low Chance / High Risk
+
+    Cloud Cost Optimization: [0.7, 0.8]
+    S3 Select Usage: [0.6, 0.4]
+    Cache Layer: [0.3, 0.2]
+    Over-Engineering: [0.8, 0.6]
+```
+
+---
+
+## limitations and outlook
+
+- add CloudFront for HTTPS transport encryption
 - no custom sub/domain without CloudFront # TODO
-- no dynamic content (3rd party could be utilized)
+- dynamic content requires compute services and/or databases
 - no content limitation to verified/registered users
 - 
 
@@ -109,3 +184,4 @@ Use aws budget notifications, free tier without payment details, and other tools
 [guide]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/HostingWebsiteOnS3Setup.html "AWS Guide for hosting static websites on s3"
 [Template]: https://github.com/aws-cloudformation/aws-cloudformation-templates/blob/main/S3/compliant-static-website.yaml "complete compliant-static-website.yaml"
 [repolink]: https://github.com/Codingschule/aws-static-website-cloudformation "Internal link to this repository"
+[calc]: https://calculator.aws/ "AWS cost calculator"
