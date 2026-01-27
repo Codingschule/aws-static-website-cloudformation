@@ -48,20 +48,40 @@ A minimalistic CloudFormation template, following Amazons [Guide][guide] for **h
 
 ---
 
-
 ## provisioning and deployment
 
-All you need is an aws account, that could be free tier or even a KodeKloud AWS playground.
+You need an aws account, could also be free tier.
 - login to aws
 - head to CloudFormation Stacks
+- Upload [s3.cf.yml](./cloudformation/s3.cf.yml)
+- choose an AppName (the Bucket name will be created from it):
+`BucketName: !Sub "${AppName}-${AWS::Region}-${AWS::AccountId}"`
+- deploy the Stack in the desired Region
+- wait for the blue Stack State to turn green CREATION_COMPLETED
+- see the Stack Output for information
+    - S3 bucket name - you can upload your website here
+    - SiteUrl - feel free to test from a browser that is NOT logged in to aws
 
 ---
 
 ## programmatic deployment
 
+- install aws cli and git
+- login `aws login`
+    - orw create an API on the MMC key using CloudShell:
+    `aws iam create-access-key` copy and paste into your ~/.aws/credentials
+- clone [repo][repolink]: `git clone https://github.com/Codingschule/aws-static-website-cloudformation.git`
+- cd into the dictionary
+`cd aws-static-website-cloudformation`
+- upload the Stack (change region)
+`aws cloudformation deploy --template-body 'file://cloudformation/s3.cf.yml' --region=us-east-1 --stack-name RandomStackName`
+instead **deploy** you can use **create-stack** or **update-stack** to be more specific.
+
 ---
 
-## cost calculation
+## cost calculation example
+
+Since inbound traffic is usually free and you only use an S3 bucket (default tarrif)
 
 ---
 
@@ -88,3 +108,4 @@ Use aws budget notifications, free tier without payment details, and other tools
 
 [guide]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/HostingWebsiteOnS3Setup.html "AWS Guide for hosting static websites on s3"
 [Template]: https://github.com/aws-cloudformation/aws-cloudformation-templates/blob/main/S3/compliant-static-website.yaml "complete compliant-static-website.yaml"
+[repolink]: https://github.com/Codingschule/aws-static-website-cloudformation "Internal link to this repository"
