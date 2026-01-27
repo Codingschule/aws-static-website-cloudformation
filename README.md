@@ -92,7 +92,6 @@ Since inbound traffic is usually free and you only use an S3 bucket (default tar
 The following examples were calculated for us-east-1 on Jan 27th 2026 and are mere examples.
 They give you an idea how cost changes with file size but also number of files.
 
-
 ---
 
 ### Cost for 1kB Website (1 file), called 1mio times, updated daily
@@ -143,19 +142,21 @@ See [calculate.aws][calc] for detailed calculations
 
 ```mermaid
 quadrantChart
-    title Opportunities vs Risks
-    x-axis Low Impact --> High Impact
-    y-axis Low Probability --> High Probability
+    title AWS Static Website Hosting – Opportunities vs Risks
+    x-axis Low Traffic --> Unexpected High Traffic
+    y-axis Low Impact --> High Impact
 
-    quadrant-1 High Chance / High Risk
-    quadrant-2 High Chance / Low Risk
-    quadrant-3 Low Chance / Low Risk
-    quadrant-4 Low Chance / High Risk
+    quadrant-1 High Opportunity / High Risk
+    quadrant-2 High Opportunity / Low Risk
+    quadrant-3 Low Opportunity / Low Risk
+    quadrant-4 Low Opportunity / High Risk
 
-    Cloud Cost Optimization: [0.7, 0.8]
-    S3 Select Usage: [0.6, 0.4]
-    Cache Layer: [0.3, 0.2]
-    Over-Engineering: [0.8, 0.6]
+    Low Cost Hosting: [0.2, 0.2]
+    Simple Architecture: [0.3, 0.3]
+    Automatic Scalability: [0.7, 0.4]
+    High GET Request Costs: [0.8, 0.8]
+    CDN Mitigation (CloudFront): [0.6, 0.5]
+    Traffic Spike Risk: [0.9, 0.7]
 ```
 
 ---
@@ -185,3 +186,5 @@ Use aws budget notifications, free tier without payment details, and other tools
 [Template]: https://github.com/aws-cloudformation/aws-cloudformation-templates/blob/main/S3/compliant-static-website.yaml "complete compliant-static-website.yaml"
 [repolink]: https://github.com/Codingschule/aws-static-website-cloudformation "Internal link to this repository"
 [calc]: https://calculator.aws/ "AWS cost calculator"
+[matt]: https://github.com/yasuoiwakura "Matthias Block" 
+[sam]: https://github.com/hackbraten68 "Sam Dillenburg"
