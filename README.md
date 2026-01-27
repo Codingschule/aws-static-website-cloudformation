@@ -74,16 +74,16 @@ http://cs-itpro-s3web-us-east-1-313333333337.s3-website-us-east-1.amazonaws.com/
 
 ## cost calculation examples
 
-Since inbound traffic is usually free and you only use an S3 bucket (default tarrif), the estimated costs depend on the size and frequency of the website.
+Since inbound traffic is usually free and you only use an S3 bucket (default tarrif), the estimated costs depend on the size of the website, the number of files involed, and frequency of the website be requested.
 
 - uploading / updating the website: usually low cost compared to outbound
 - storage: storage actually used
 - outbound traffic:
     - number of requests
-    - data transfered out
+    - data transfered out of aws
 
 The following examples were calculated for us-east-1 on Jan 27th 2026 and are mere examples.
-They give you an idea how cost changes with file size but also number of files.
+They give you an idea how cost changes with file **size** but also **number** of files.
 
 ### Cost for 1kB Website (1 file), called 1mio times, updated daily
 
