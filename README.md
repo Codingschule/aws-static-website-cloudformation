@@ -10,7 +10,7 @@ Eventually implent dynamic features like CI/CD or serverless guestbook/contact f
 
 This can serve as pay-per-use template for your static Websites hostet on AWS.
 
-## purpose
+## Purpose
 
 A minimalistic CloudFormation template, following Amazons [Guide][guide] for **hosting static websites**, without their overwhelming [500+ lines template][template].
 
@@ -21,7 +21,7 @@ A minimalistic CloudFormation template, following Amazons [Guide][guide] for **h
     - attached Read Policies
     - configured as website serving index.html by default
 
-## target audience
+## Target audience
 
 - AWS Cloud Practitioners seeking hands-on AWS experience
 - AWS CloudFormation learners or starters
@@ -40,7 +40,7 @@ A minimalistic CloudFormation template, following Amazons [Guide][guide] for **h
 - AWS SDK (cli) (optional)
 - AWS CloudShell (optional)
 
-## provisioning and deployment
+## Provision and deploy
 
 You need an aws account, could also be free tier.
 - login to aws
@@ -54,7 +54,7 @@ You need an aws account, could also be free tier.
     - S3 bucket name - you can upload your website here
     - SiteUrl - feel free to test from a browser that is NOT logged in to aws
 
-## programmatic deployment
+## Programmatic deployment
 
 - install aws cli and git
 - login `aws login`
@@ -67,12 +67,12 @@ You need an aws account, could also be free tier.
 `aws cloudformation deploy --template-body 'file://cloudformation/s3.cf.yml' --region=us-east-1 --stack-name RandomStackName`
 instead **deploy** you can use **create-stack** or **update-stack** to be more specific.
 
-## website url
+## Website url
 
 If your AppName is `cs-itpro``and you deploy on us-east-1 using account 313333333337 your URL would be 
 http://cs-itpro-s3web-us-east-1-313333333337.s3-website-us-east-1.amazonaws.com/
 
-## cost calculation examples
+## Cost calculation examples
 
 Since inbound traffic is usually free and you only use an S3 bucket (default tarrif), the estimated costs depend on the size of the website, the number of files involed, and frequency of the website be requested.
 
@@ -140,14 +140,14 @@ AWS S3 storage starts cheap and scales with cost.
     - Eventually more Customers generating revenue
 
 
-## limitations and outlook
+## Limitations and outlook
 
 - add CloudFront for HTTPS transport encryption
 - no custom sub/domain without CloudFront # TODO
 - dynamic content requires compute services and/or databases
 - no content limitation to verified/registered users
 
-## disclaimer and known risks
+## Disclaimer and known risks
 
 This template comes "as it is" with out any warranty for completeness.
 You also must be aware, that a serverless pay-as-you-go service like s3 - especially when configured as public space - because of is elasticity - can generate high costs if your website is downloaded often.
@@ -156,7 +156,7 @@ Use aws budget notifications, free tier without payment details, and other tools
 
 ---
 
-## Autor
+## Autors
 - [Matthias Block][matt]: Content
 - [Sam Dillenburg][sam]: Mentoring
 - Your favourite LLM: Confusion
